@@ -1,11 +1,6 @@
 html, body {
   margin: 0;
-  padding: 0;
-}
-
-.content {
-  width: 60%;
-  margin: 0 auto;
+  padding: 0 .5em;
 }
 
 .content table {
