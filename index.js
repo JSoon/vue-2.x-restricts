@@ -4,7 +4,7 @@ marked.setOptions({
 
 axios({
     method: 'GET',
-    url: '/vue-restricts.md',
+    url: `./vue-restricts.md`,
     responseType: 'text',
   })
   .then(function (response) {
