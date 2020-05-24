@@ -1,0 +1,23 @@
+{
+  "name": "vue-2.x-restricts",
+  "version": "1.0.0",
+  "description": "Vue.js 2.x 编码规范指南.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JSoon/vue-2.x-restricts.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JSoon/vue-2.x-restricts/issues"
+  },
+  "homepage": "https://github.com/JSoon/vue-2.x-restricts#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "marked": "^1.1.0"
+  }
+}
