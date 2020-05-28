@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>世纪加华前端团队编码规范指南</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      line-height: 2;
+    }
+
+    header {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 50vh;
+      padding: 2em 0;
+      background: url("./img/index-header-bg.jpg") no-repeat center center #171f26;
+      background-size: cover;
+    }
+
+    header::after {
+      content: "";
+      z-index: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, .4);
+    }
+
+    .title {
+      z-index: 1;
+      position: relative;
+      font-size: 50px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, .85);
+      text-align: center;
+    }
+
+    .subtitle {
+      z-index: 1;
+      position: relative;
+      font-size: 30px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, .85);
+      text-align: center;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2em 1em;
+    }
+
+    a {
+      color: #607D8B;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="title">Front-End Coding Guidelines</div>
+    <div class="subtitle">@Century JiaHua</div>
+  </header>
+  <main>
+    <ul>
+      <li>
+        <a href="./views/restriction-naming/restriction-naming.html" target="_blank">
+          命名规范
+        </a>
+      </li>
+      <li>
+        <a href="./views/restriction-comments/restriction-comments.html" target="_blank">
+          注释规范
+        </a>
+      </li>
+      <li>
+        <a href="./views/restriction-vscode-plugins/restriction-vscode-plugins.html" target="_blank">
+          VSCode 插件规范
+        </a>
+      </li>
+      <li>
+        <a href="./views/restriction-vue-2.x/restriction-vue-2.x.html" target="_blank">
+          Vue.js 框架编码规范
+        </a>
+      </li>
+    </ul>
+  </main>
+</body>
+
+</html>

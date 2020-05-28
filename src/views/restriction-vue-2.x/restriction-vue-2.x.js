@@ -1,14 +1,12 @@
-marked.setOptions({
-  langPrefix: 'hljs ',
-});
-
 axios({
     method: 'GET',
-    url: `./vue-restricts.md`,
+    url: `../../docs/restriction-vue-2.x.md`,
     responseType: 'text',
   })
   .then(function (response) {
-    const { data } = response;
+    const {
+      data
+    } = response;
     const contentBox = document.querySelector('#J_Content');
     contentBox.innerHTML = marked(data);
   });
