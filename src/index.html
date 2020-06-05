@@ -41,10 +41,14 @@
       background-color: rgba(0, 0, 0, .4);
     }
 
+    footer {
+      height: 3rem;
+    }
+
     .title {
       z-index: 1;
       position: relative;
-      font-size: 50px;
+      font-size: 3rem;
       font-weight: 300;
       color: rgba(255, 255, 255, .85);
       text-align: center;
@@ -53,7 +57,7 @@
     .subtitle {
       z-index: 1;
       position: relative;
-      font-size: 30px;
+      font-size: 2rem;
       font-weight: 300;
       color: rgba(255, 255, 255, .85);
       text-align: center;
@@ -73,6 +77,21 @@
     a:hover {
       text-decoration: underline;
     }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    section {
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+      font-size: 2rem;
+    }
   </style>
 </head>
 
@@ -82,29 +101,43 @@
     <div class="subtitle">@Century JiaHua</div>
   </header>
   <main>
-    <ul>
-      <li>
-        <a href="./views/restriction-naming/restriction-naming.html" target="_blank">
-          命名规范
-        </a>
-      </li>
-      <li>
-        <a href="./views/restriction-comments/restriction-comments.html" target="_blank">
-          注释规范
-        </a>
-      </li>
-      <li>
-        <a href="./views/restriction-vscode-plugins/restriction-vscode-plugins.html" target="_blank">
-          VSCode 插件规范
-        </a>
-      </li>
-      <li>
-        <a href="./views/restriction-vue-2.x/restriction-vue-2.x.html" target="_blank">
-          Vue.js 框架编码规范
-        </a>
-      </li>
-    </ul>
+    <section>
+      <div class="section-title">代码规范</div>
+      <ul>
+        <li>
+          <a href="./views/restriction-naming/restriction-naming.html" target="_blank">
+            命名规范
+          </a>
+        </li>
+        <li>
+          <a href="./views/restriction-comments/restriction-comments.html" target="_blank">
+            注释规范
+          </a>
+        </li>
+        <li>
+          <a href="./views/restriction-vscode-plugins/restriction-vscode-plugins.html" target="_blank">
+            VSCode 插件规范
+          </a>
+        </li>
+        <li>
+          <a href="./views/restriction-vue-2.x/restriction-vue-2.x.html" target="_blank">
+            Vue.js 框架编码规范
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <div class="section-title">技术交流</div>
+      <ul>
+        <li>
+          <a href="./views/blog-svg-sprites/blog-svg-sprites.html" target="_blank">
+            SVG Sprites 在 Vue.js 中的运用
+          </a>
+        </li>
+      </ul>
+    </section>
   </main>
+  <footer></footer>
 </body>
 
 </html>
