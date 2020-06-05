@@ -11,6 +11,7 @@
   - [配置svg-sprites-loader](#配置svg-sprites-loader)
 - [总结](#总结)
 - [补充](#补充)
+- [参考资料](#参考资料)
 
 ## 为什么需要使用 SVG
 
@@ -197,3 +198,9 @@ module.exports = {
 ## 补充
 
 相比起字体图标, svg雪碧图有着兼容性的优势, 以及样式上更佳的灵活性. 同时由于`symbol`元素是本地创建并插入到HTML文档中, 拥有更快的加载速度. 在后期维护中, svg雪碧图不用频繁地对字体图标资源进行更新, 而仅仅需要新增图标文件即可, 这些都是字体图标所不具备的优点.
+
+## 参考资料
+
+[懒人神器：svg-sprite-loader实现自己的Icon组件](https://segmentfault.com/a/1190000015367490)
+
+[vue 使用svg图片 svg-sprite-loader](https://juejin.im/post/5c693d3af265da2dc231d7ea)
