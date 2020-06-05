@@ -20,7 +20,7 @@ SVG, 全称Scalable Vector Graphics, 即可缩放矢量图像. 它是一种基�
 
 > 由于SVG在描述复杂图像时, 会产生大量计算, 故本文只讨论其作为图标库的场景.
 
-![SVG浏览器兼容性](/views/blog-svg-sprites/WX20200605-161927@2x.png)
+![SVG浏览器兼容性](./WX20200605-161927@2x.png)
 
 截图自[MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg#Browser_compatibility).
 
