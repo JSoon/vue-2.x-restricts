@@ -15,3 +15,18 @@ html, body {
 .content h1 {
   font-size: 2em;
 }
+
+/* 覆盖page.css */
+.content blockquote {
+  padding: 1em 2em 1em 1.4em;
+  background-color: #f4f4f4;
+}
+
+.content blockquote p:first-child {
+  margin-top: 0;
+}
+
+/* 覆盖hljs */
+.hljs {
+  padding: 1.2em;
+}
