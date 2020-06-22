@@ -1,6 +1,6 @@
 axios({
     method: 'GET',
-    url: `../../docs/restriction-naming.md`,
+    url: `./restriction-naming.md`,
     responseType: 'text',
   })
   .then(function (response) {

@@ -152,7 +152,7 @@ methods: {
 例如, 我们需要为导航条增加一个渐变色背景:
 
 ```css
-// 导航根节点
+/* 导航根节点 */
 .weui-navigation-bar {
   background-image: linear-gradient(90deg, rgba(144, 18, 219, 1), rgba(14, 18, 204, 1)) !important;
 }
@@ -164,11 +164,32 @@ methods: {
 
 **iOS**
 
+![iOS系统下的表现](./1592802403041903.gif)
 
-通过上例我们发现, 在iOS下, 整个页面连同顶部导航一起, 发生了滚动位移.
+通过上例我们发现, 在iOS下, 整个页面(可以理解为`<page>`节点)连同顶部导航一起, 发生了滚动位移.
 
-很奇怪, 不是吗? 那么, 为什么会这样? 这便是由于两大手机操作系统的差异曹成的:
+很奇怪, 不是吗? 那么, 为什么会这样? 这便是由于两大手机操作系统的差异造成的:
 
 > iOS下, 滚动距离溢出屏幕时, 会出现弹性动画效果, 从而造成页面节点发生相应的位移. Android系统则不会(至少是大部分).
 
+仔细观察可以发现, 导航的内容部分并未跟随页面进行滚动, 仅仅是背景色随之发生了位移. 检查源码发现, `.weui-navigation-bar__inner`才是固定布局的元素:
 
+```css
+.weui-navigation-bar__inner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5001;
+  height: var(--height);
+  padding-right: var(--right);
+  width: calc(100% - var(--right));
+}
+```
+
+因为之前的背景色被添加到了外层元素`.weui-navigation-bar`上, 由于iOS系统弹性动效的特性, 所以背景色也发生了位移. 所以我们只需要将背景色添加到`.weui-navigation-bar__inner`上即可:
+
+```css
+.weui-navigation-bar .weui-navigation-bar__inner {
+  background-image: linear-gradient(90deg, rgba(144, 18, 219, 1), rgba(14, 18, 204, 1)) !important;
+}
+```

@@ -1,6 +1,6 @@
 axios({
     method: 'GET',
-    url: `../../docs/restriction-comments.md`,
+    url: `./restriction-comments.md`,
     responseType: 'text',
   })
   .then(function (response) {

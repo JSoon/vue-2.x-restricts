@@ -1,6 +1,6 @@
 axios({
     method: 'GET',
-    url: `../../docs/restriction-vue-2.x.md`,
+    url: `./restriction-vue-2.x.md`,
     responseType: 'text',
   })
   .then(function (response) {

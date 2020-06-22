@@ -1,6 +1,6 @@
 axios({
     method: 'GET',
-    url: `../../docs/blog-svg-sprites.md`,
+    url: `./blog-svg-sprites.md`,
     responseType: 'text',
   })
   .then(function (response) {

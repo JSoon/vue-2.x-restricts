@@ -1,6 +1,6 @@
 axios({
     method: 'GET',
-    url: `../../docs/restriction-vscode-plugins.md`,
+    url: `./restriction-vscode-plugins.md`,
     responseType: 'text',
   })
   .then(function (response) {

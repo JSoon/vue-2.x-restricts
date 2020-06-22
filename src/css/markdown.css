@@ -19,7 +19,7 @@ html, body {
 /* 覆盖page.css */
 .content blockquote {
   padding: 1em 2em 1em 1.4em;
-  background-color: #f4f4f4;
+  background-color: #f8f8f8;
 }
 
 .content blockquote p:first-child {
