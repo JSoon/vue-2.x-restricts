@@ -43,7 +43,7 @@
 >
 > 3. The string "`-->`"
 
-参考文献:
+参考资料:
 
 https://www.w3.org/TR/html52/syntax.html#comments
 
@@ -82,7 +82,7 @@ https://www.w3schools.com/html/html_comments.asp
 
 > Comments begin with the characters "`/*`" and end with the characters "`*/`". They may occur anywhere outside other tokens, and their contents have no influence on the rendering. Comments may not be nested.
 
-参考文献:
+参考资料:
 
 https://www.w3.org/TR/CSS21/syndata.html#comments
 
@@ -157,7 +157,7 @@ https://drafts.csswg.org/css-syntax-3/#token-diagrams
 >
 >Comments behave like white space and are discarded except that, if a [MultiLineComment](https://tc39.es/ecma262/#prod-MultiLineComment) contains a line terminator code point, then the entire comment is considered to be a [LineTerminator](https://tc39.es/ecma262/#prod-LineTerminator) for purposes of parsing by the syntactic grammar.
 
-参考文献:
+参考资料:
 
 https://tc39.es/ecma262/#sec-comments
 
@@ -192,7 +192,7 @@ const finalPrice = originPrice * discount;
 
 **JSDoc注释**
 
-JSDoc注释用于所有的类和方法. 旨在对函数进行详细描述, 包括参数类型, 相关方法, 参考文献, 使用方式等等.
+JSDoc注释用于所有的类和方法. 旨在对函数进行详细描述, 包括参数类型, 相关方法, 参考资料, 使用方式等等.
 
 详细文档: https://jsdoc.app/
 
@@ -224,7 +224,7 @@ export default function to(promise) {
 
 区域注释依赖于VSCode Editor的区域注释功能, 能够对区域内代码进行收起和展开. 用于对代码进行逻辑分区, 便于维护.
 
-参考文献: https://code.visualstudio.com/updates/v1_17#_folding-regions
+参考资料: https://code.visualstudio.com/updates/v1_17#_folding-regions
 
 ```js
 //#region 页头搜索框
