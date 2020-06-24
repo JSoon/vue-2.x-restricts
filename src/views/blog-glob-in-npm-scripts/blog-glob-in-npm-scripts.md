@@ -1,4 +1,4 @@
-<h1>为什么需要在 NPM 脚本中对 glob 语句使用引号</h1>
+<h1>NPM 脚本中使用 glob pattern 的正确姿势</h1>
 
 ![oh my glob](./oh_my_glob-2721.jpeg)
 
