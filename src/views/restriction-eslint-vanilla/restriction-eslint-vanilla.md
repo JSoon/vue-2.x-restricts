@@ -2,9 +2,10 @@
 
 <h2>文档变更日志</h2>
 
-| 编写人员 | 修改时间   | 版本  |
-| -------- | ---------- | ----- |
-| 孙靖     | 2020/06/22 | 1.0.0 |
+| 编写人员 | 修改时间   | 版本  |  更新日志
+| -------- | ---------- | ----- | ------ |
+| 孙靖     | 2020/06/22 | 1.0.0 |        |
+| 孙靖     | 2020/07/29 | 1.0.1 | 优化brace-style |
 
 ## 配置文件
 
@@ -17,7 +18,7 @@ const {
   NODE_ENV,
 } = process.env;
 const NODE_ENV_DEV = 'development';
-const NODE_ENV_TEST = 'test';
+const NODE_ENV_STAGE = 'staging';
 const NODE_ENV_PROD = 'production';
 
 module.exports = {
@@ -68,7 +69,9 @@ module.exports = {
     'no-use-before-define': ['error', 'nofunc'],
     'no-unused-expressions': ['off'],
     'no-param-reassign': ['warn'],
-    'brace-style': ['off'],
+    'brace-style': ['error', 'stroustrup', {
+      'allowSingleLine': true
+    }],
 
     // #endregion
   },
