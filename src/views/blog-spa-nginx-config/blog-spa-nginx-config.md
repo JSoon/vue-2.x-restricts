@@ -68,6 +68,8 @@ location /h5 {
 
 [Trying Several Options](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options)
 
+[NGINX $request_uri vs $uri](https://stackoverflow.com/questions/48708361/nginx-request-uri-vs-uri/48709976)
+
 [Nginx: When the `index` and `try_files` in the same block, why the `try_files` will be processed, not the `index` directive?
 ](https://stackoverflow.com/questions/36175676/nginx-when-the-index-and-try-files-in-the-same-block-why-the-try-files-w)
 
