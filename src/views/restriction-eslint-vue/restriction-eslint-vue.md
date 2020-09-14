@@ -53,21 +53,25 @@ module.exports = {
     'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
     'max-len': ['error', 200],
     'comma-dangle': ['error', 'always-multiline'],
-    'consistent-return': ['off'],
-    'import/extensions': ['off'],
-    'import/no-unresolved': ['off'],
-    'import/no-extraneous-dependencies': ['off'],
-    'import/prefer-default-export': ['off'],
-    'func-names': ['off'],
-    'linebreak-style': ['off'],
-    'no-unused-vars': ['warn'],
-    'no-useless-return': ['warn'],
+    'consistent-return': 'off',
+    'import/extensions': 'off',
+    'import/no-cycle': 'off',
+    'import/no-unresolved': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
+    'func-names': 'off',
+    'linebreak-style': 'off',
+    'no-unused-vars': 'warn',
+    'no-useless-return': 'warn',
     'no-use-before-define': ['error', 'nofunc'],
-    'no-unused-expressions': ['off'],
-    'no-param-reassign': ['warn'],
+    'no-unused-expressions': 'off',
+    'no-param-reassign': 'warn',
+    'no-shadow': 'warn',
     'brace-style': ['error', 'stroustrup', {
-      'allowSingleLine': true
+      allowSingleLine: true,
     }],
+    'no-irregular-whitespace': 'off',
+    'no-underscore-dangle': 'off',
 
     // #endregion
 
@@ -87,6 +91,18 @@ module.exports = {
       ignoreProperties: true,
     }],
     'vue/eqeqeq': ['error', 'always'],
+    'vue/component-name-in-template-casing': ['error', 'PascalCase', {
+      registeredComponentsOnly: true,
+      ignores: [],
+    }],
+    'vue/match-component-file-name': ['error', {
+      extensions: ['vue'],
+      shouldMatchCase: true,
+    }],
+    'vue/space-infix-ops': 'error',
+    'vue/padding-line-between-blocks': ['error', 'always'],
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
 
     // #endregion
   },
