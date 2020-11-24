@@ -18,7 +18,7 @@
   "homepage": "https://github.com/JSoon/vue-2.x-restricts#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "highlight.js": "^10.0.3",
+    "highlight.js": "^10.1.2",
     "marked": "^1.1.0"
   }
 }
