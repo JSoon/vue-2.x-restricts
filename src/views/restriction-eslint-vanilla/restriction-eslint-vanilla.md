@@ -6,6 +6,7 @@
 | -------- | ---------- | ----- | ------ |
 | 孙靖     | 2020/06/22 | 1.0.0 |        |
 | 孙靖     | 2020/07/29 | 1.0.1 | 优化brace-style |
+| 孙靖     | 2021/01/20 | 1.0.2 | 优化comma-spacing |
 
 ## 配置文件
 
@@ -57,6 +58,7 @@ module.exports = {
     'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
     'max-len': ['error', 200],
     'comma-dangle': ['error', 'always-multiline'],
+    'comma-spacing': ['error', { before: false, after: true }],
     'consistent-return': 'off',
     'import/extensions': 'off',
     'import/no-cycle': 'off',
