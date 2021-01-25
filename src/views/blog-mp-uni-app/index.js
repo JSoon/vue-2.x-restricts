@@ -1,6 +1,6 @@
 axios({
     method: 'GET',
-    url: `./blog-template.md`,
+    url: `./index.md`,
     responseType: 'text',
   })
   .then(function (response) {
