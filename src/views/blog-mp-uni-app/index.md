@@ -15,6 +15,7 @@
   - [[uni] 页面间通讯](#uni-页面间通讯)
   - [[uni] filter, 对象数据, onChange事件](#uni-filter-对象数据-onchange事件)
   - [showLoading & showToast & hideLoading](#showloading--showtoast--hideloading)
+  - [[原生] backgroundColorTop & backgroundColorBottom](#原生-backgroundcolortop--backgroundcolorbottom)
   - [待更新...](#待更新)
 
 ## 问题集合
@@ -387,7 +388,16 @@ export default {
     }
   }
 }
-
 ```
+
+[wx.hideLoading 会把 wx.showToast提示框关掉](https://developers.weixin.qq.com/community/develop/doc/0000ea4401cce8c9381b8477d51400)
+
+https://developers.weixin.qq.com/miniprogram/dev/api/ui/interaction/wx.showToast.html
+
+### [原生] backgroundColorTop & backgroundColorBottom
+
+仅 iOS 支持, 当顶部导航背景非 `#FFFFFF` 时, 用于设置顶部/底部弹性交互页面以外的背景色, 避免出现白色, 造成较大的色块视觉差. 若不设置则默认为纯白色.
+
+![backgroundColorTop](./WX20210127-110435@2x.png)
 
 ### 待更新...
