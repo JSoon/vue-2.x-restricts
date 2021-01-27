@@ -18,7 +18,7 @@
 
 ## 逻辑或 (`||`)
 在控制合并运算符出现以前, 一般通过 `||` 来为变量设置默认值, 例如:
-```javascript
+```js
 const paginate = (options = {}) => {
   return [1, 2, 3, 4, 5].splice(0, options.limit || 3);
 }
@@ -40,7 +40,7 @@ leftExpr ?? rightExpr
 > 空值合并运算符 `??` 的计算方式是, 当运算符左边的值为 `null` 或者 `undefined` 时, 返回右边的值, 否则, 返回运算符左边的值.
 
 所以刚才的代码可以改写为: 
-```javascript
+```js
 const paginate = (options = {}) => {
   return [1, 2, 3, 4, 5].splice(0, options.limit ?? 3);
 }
@@ -54,13 +54,13 @@ paginate(0); // expected: [], output: []
 ### 不能直接同 AND 或者 OR 运算符链式使用
 
 **错误的语法**
-```javascript
+```js
 null || undefined ?? "foo"; // raises a SyntaxError
 true || undefined ?? "foo"; // raises a SyntaxError
 ```
 
 **正确的语法**
-```javascript
+```js
 // 加上圆括号, 提升运算符优先级
 (null || undefined) ?? "foo"; // returns "foo"
 ```
@@ -70,7 +70,7 @@ true || undefined ?? "foo"; // raises a SyntaxError
 
 简而言之, 可选链的出现, 大大提升了程序的简洁度和鲁棒性, 例如:
 
-```javascript
+```js
 // 判断属性是否存在, 并进行对应的逻辑处理
 const a = {
   b: {
@@ -107,7 +107,7 @@ if (a?.b?.c?.d) {
 ```
 
 ### 语法
-```javascript
+```js
 obj.val?.prop // 属性读取
 obj.val?.[expr] // 表达式属性读取 (即该属性名由表达式生成, 例如: obj.val?.['prop' + 'Name'])
 obj.arr?.[index] // 数组元素读取
@@ -119,7 +119,7 @@ obj.func?.(args) // 函数调用
 ## `?.` 和 `??` 的关系
 由于可选链和空值合并运算符都对 `null` 和 `undefined` 敏感, 所以通常可以将这两种运算符联合使用, 用于为变量设置缺省值, 例如:
 
-```javascript
+```js
 let customer = {
   name: "Carl",
   details: { age: 82 }

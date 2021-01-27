@@ -11,11 +11,11 @@
   - [自定义导航 fixed 导致 iOS 下滚动时背景随页面移位](#自定义导航-fixed-导致-ios-下滚动时背景随页面移位)
   - [[uni] 样式穿透](#uni-样式穿透)
   - [[uni] 主包大小超限制导致真机预览失败或无法上传](#uni-主包大小超限制导致真机预览失败或无法上传)
-  - [[uni] 多环境运行/发布](#uni-多环境运行发布)
+  - [[uni] 多环境运行 & 发布](#uni-多环境运行--发布)
   - [[uni] 页面间通讯](#uni-页面间通讯)
-  - [[uni] 过滤器和对象数据](#uni-过滤器和对象数据)
+  - [[uni] filter, 对象数据, onChange事件](#uni-filter-对象数据-onchange事件)
   - [showLoading & showToast & hideLoading](#showloading--showtoast--hideloading)
-  - [待更新](#待更新)
+  - [待更新...](#待更新)
 
 ## 问题集合
 
@@ -67,6 +67,7 @@ export default {
 具体规则如下:
 
 - 页面样式穿透页面组件, 无需配置 `options.styleIsolation`
+
 ```js
 // Router Page
 <template>
@@ -88,7 +89,9 @@ export default {
   </view>
 </template>
 ```
+
 - 父组件样式穿透子组件, 须给父组件配置 `options.styleIsolation`
+
 ```js
 // Router Page
 <template>
@@ -198,6 +201,7 @@ module.exports = {
 如果在开发时, 小程序由于主包大小超过限制而无法预览及上传, 主要应从以下几个方面进行排查:
 
 1. 当引用 `lodash` 等模块时, 引入方式是否正确
+
 ```js
 // 错误的引入方式
 // 会将整个lodash打入主包, 体积会增加400kb左右
@@ -207,7 +211,9 @@ import { isNil } from 'lodash'
 // 仅会打入核心库和isNil
 import _isNil from 'lodash/isNil'
 ```
+
 2. 引入的模块是否包含国际化文件, 例如 `momentjs`
+
 ```js
 // 错误的引入方式
 // 会打入所有国际化文件, 整个locale包体积约为500kb
@@ -225,7 +231,7 @@ moment.locale('zh-cn')
 
 4. 其他情况可根据 `webpack-bundle-analyzer` 的可视化界面自行分析
 
-### [uni] 多环境运行/发布
+### [uni] 多环境运行 & 发布
 
 默认情况下, 在HBuilderX 中，点击“运行”编译出来的代码是开发环境，点击“发行”编译出来的代码是生产环境. 但是, 在实际工作中, 很可能不止存在两种开发环境.
 
@@ -267,6 +273,7 @@ https://www.jianshu.com/p/e8401b08f4b5
 页面间通讯通常使用两种方式: 
 
 1. 全局事件 emit
+
 ```js
 // page A
 // 事件发布
@@ -285,6 +292,7 @@ uni.$off('update', callback)
 值得注意的是, 若全局事件在单个组件中订阅, 同时该组件在同一页面上被多次引入, 会造成由同一页面同一组件多次渲染, 导致 emit 事件重复注册的 issue. 所以需要在事件发布的组件中加入 `eventStamp(举例命名)` 事件戳属性, 从而保证全局事件在同一时间点的唯一性.
 
 2. 页面间事件 eventChannel
+
 ```js
 // page A
 // 事件订阅
@@ -315,7 +323,7 @@ https://uniapp.dcloud.io/api/router?id=navigateto
 
 https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.navigateTo.html
 
-### [uni] 过滤器和对象数据
+### [uni] filter, 对象数据, onChange事件
 
 [vue-cli-plugin-uni](https://www.npmjs.com/package/@dcloudio/vue-cli-plugin-uni) 会将 filter 后的数据单独返回, 原始对象会被存储在一个名为 `$orig` 的对象中, 原始对象的数据结构会被改变, 通过调试源码, 可以发现类似代码:
 
@@ -334,8 +342,52 @@ https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.navigateTo.html
 }
 ```
 
+这样就会导致一个问题, 在 `onChange` 事件(不仅限于该事件)句柄中若对 `item` 有引用, 那么此时若要访问原始数据对象, 需从 `item.$orig` 中获取.
+
 ### showLoading & showToast & hideLoading
 
+`showLoading` 和 `showToast` 在底层调用的都是系统级别的 toast, 由于手机操作系统限制, 同时只能够存在唯一的 toast, 所以当调用 `hideLoading` 时, 会关闭掉所有的 toast.
 
+> 由于 [运行环境](https://developers.weixin.qq.com/miniprogram/dev/framework/runtime/env.html) 的差异, 在开发者工具中, 不存在该限制.
 
-### 待更新
+为避免 `hideLoading` 关闭所有的 toast, 可以通过队列缓存来解决. 以下是 uni-app 的实现代码, 供参考:
+
+```js
+// vuex store
+
+// 关闭所有toast和loading界面反馈
+const hideLoading = (state) => {
+  // 当toast队列为空, 且loading队列也为空时, 才调用hideLoading
+  if (!state.toasts.length && !state.loadings.length) {
+    uni.hideLoading()
+  }
+}
+
+export default {
+  namespaced: true,
+  state: {
+    // showToast和showLoading都是系统级别的toast(同一个), hideLoading会同时将其关闭, 故这里需要手动进行队列缓存进行管理
+    loadings: [],
+    toasts: []
+  },
+  mutations: {
+    ADD_LOADING (state, loading = 'loading') {
+      state.loadings.push(loading)
+    },
+    REMOVE_LOADING (state) {
+      state.loadings.pop()
+      hideLoading(state)
+    },
+    ADD_TOAST (state, toast = 'toast') {
+      state.toasts.push(toast)
+    },
+    REMOVE_TOAST (state) {
+      state.toasts.pop()
+      hideLoading(state)
+    }
+  }
+}
+
+```
+
+### 待更新...
