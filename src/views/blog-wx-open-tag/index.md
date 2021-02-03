@@ -15,7 +15,7 @@
 - [参考资料](#参考资料)
 
 ## 问题背景
-[开放标签](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/WeChat_H5_Launch_APP.html) 是微信开放平台于2020年5月发布的一项开放能力, 功能介绍如下:
+[开放标签](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/WeChat_H5_Launch_APP.html)是微信开放平台于2020年5月发布的一项开放能力, 功能介绍如下:
 
 > 在部分场景下，用户在微信内访问网页时需要跳转到 APP 使用完整服务，为此我们提供了“微信开放标签”以满足微信内网页跳转到 APP 的需求。 微信内网页跳转 APP 功能已向全体开发者开放，当用户访问已认证服务号的 JS 接口安全域名时，可以通过“微信开放标签”打开符合条件的 APP 。
 

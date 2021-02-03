@@ -1,11 +1,7 @@
 @import "../libs/font-awesome.min.css";
 @import "../libs/highlight.js/styles/atom-one-dark.css";
 @import "../libs/page.css";
-
-html, body {
-  margin: 0;
-  padding: 0 .5em;
-}
+@import "../css/common.css";
 
 .content table {
   display: table;
