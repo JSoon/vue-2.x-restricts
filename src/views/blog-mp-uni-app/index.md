@@ -46,13 +46,13 @@ https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html
 
 ### 原生组件导致的兼容问题
 
-[微信小程序 - 原生组件采坑记录](http://jsoon.fun/JiaHua-Front-End-Coding-Guide/views/blog-miniprogram-native-component/blog-miniprogram-native-component.html)
+[微信小程序 - 原生组件采坑记录](http://jsoon.fun/front-end/views/blog-miniprogram-native-component/blog-miniprogram-native-component.html)
 
 ### 自定义导航 fixed 导致 iOS 下滚动时背景随页面移位
 
 在使用自定义导航 fixed 布局时, 需将背景设置在 fixed 元素上, 否则, 由于 iOS 存在弹性交互效果, 设置在非 fixed 元素上(如父元素节点)会造成背景随 Page 移位的情况. 此类兼容问题适用于所有 fixed 布局元素.
 
-[微信小程序 - WeUI 自定义顶部导航](http://jsoon.fun/JiaHua-Front-End-Coding-Guide/views/blog-miniprogram-custom-navigation/blog-miniprogram-custom-navigation.html)
+[微信小程序 - WeUI 自定义顶部导航](http://jsoon.fun/front-end/views/blog-miniprogram-custom-navigation/blog-miniprogram-custom-navigation.html)
 
 ### [uni] 样式穿透
 
