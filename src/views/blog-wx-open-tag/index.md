@@ -7,7 +7,7 @@
 - [常规准备工作](#常规准备工作)
 - [坑来了](#坑来了)
   - [微信开发者工具, 无法调试开放标签](#微信开发者工具-无法调试开放标签)
-  - [Vue, React 等 MVVM 框架 `<template></template>` 内容不显示](#vue-react-等-mvvm-框架-templatetemplate-内容不显示)
+  - [Vue, React 等 MVVM 框架 `<template>` 内容不显示](#vue-react-等-mvvm-框架-template-内容不显示)
   - [页面样式无法作用在模板中的 HTML 元素上](#页面样式无法作用在模板中的-html-元素上)
   - [代码正确, 但开放标签内容不显示](#代码正确-但开放标签内容不显示)
   - [`checkJsApi` 无法检测当前客户端版本是否支持开放标签](#checkjsapi-无法检测当前客户端版本是否支持开放标签)
@@ -165,7 +165,7 @@ wx.error(function (res) {
 
 或者, 也可以使用[公众平台测试沙盒](http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)来进行调试 (u r welcome BTW).
 
-### Vue, React 等 MVVM 框架 `<template></template>` 内容不显示
+### Vue, React 等 MVVM 框架 `<template>` 内容不显示
 
 在此类视图模板中请使用 `<script type="text/wxtag-template"><script>`, 避免与 MVVM 框架的 `<template>` 标签冲突.
 
@@ -187,7 +187,7 @@ wx.error(function (res) {
 
 ### 页面样式无法作用在模板中的 HTML 元素上
 
-微信开放标签使用了类似 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 的技术对开放标签内容进行组装和渲染 (说是类似, 是因为无法窥探其内部实现), 其插槽中模版的样式是和页面隔离的，因此需要注意在插槽中定义模版的样式. 也就意味着, 开发者需要维护两套样式 (微信H5中的开放标签和常规H5中的非开放标签), 尽管两套样式的代码应当保持一致.
+微信开放标签使用了类似 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 的技术对开放标签内容进行组装和渲染 (说是类似, 是因为未窥探其内部实现), 其插槽中模版的样式是和页面隔离的，因此需要注意在插槽中定义模版的样式. 也就意味着, 开发者需要维护两套样式 (微信H5中的开放标签和常规H5中的非开放标签), 尽管两套样式的代码应当保持一致.
 
 > 注1: 页面中与布局和定位相关的样式，如 `position: fixed; top -100;` 等，尽量不要写在插槽模版的节点中，请声明在标签或其父节点上.
 > 
