@@ -349,7 +349,7 @@ https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.navigateTo.html
 
 `showLoading` 和 `showToast` 在底层调用的都是系统级别的 toast, 由于手机操作系统限制, 同时只能够存在唯一的 toast, 所以当调用 `hideLoading` 时, 会关闭掉所有的 toast.
 
-> 由于 [运行环境](https://developers.weixin.qq.com/miniprogram/dev/framework/runtime/env.html) 的差异, 在开发者工具中, 不存在该限制.
+> 由于[运行环境](https://developers.weixin.qq.com/miniprogram/dev/framework/runtime/env.html)的差异, 在开发者工具中, 不存在该限制.
 
 为避免 `hideLoading` 关闭所有的 toast, 可以通过队列缓存来解决. 以下是 uni-app 的实现代码, 供参考:
 

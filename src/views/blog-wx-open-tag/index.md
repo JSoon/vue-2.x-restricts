@@ -7,6 +7,11 @@
 - [常规准备工作](#常规准备工作)
 - [坑来了](#坑来了)
   - [微信开发者工具, 无法调试开放标签](#微信开发者工具-无法调试开放标签)
+  - [Vue, React 等 MVVM 框架 `<template></template>` 内容不显示](#vue-react-等-mvvm-框架-templatetemplate-内容不显示)
+  - [页面样式无法作用在模板中的 HTML 元素上](#页面样式无法作用在模板中的-html-元素上)
+  - [代码正确, 但开放标签内容不显示](#代码正确-但开放标签内容不显示)
+  - [`checkJsApi` 无法检测当前客户端版本是否支持开放标签](#checkjsapi-无法检测当前客户端版本是否支持开放标签)
+  - [iOS 下抛错: JS-SDK 签名不合法](#ios-下抛错-js-sdk-签名不合法)
 - [参考资料](#参考资料)
 
 ## 问题背景
@@ -97,7 +102,7 @@ export {
 
 1. 绑定域名
 
-登录 [微信公众平台](https://mp.weixin.qq.com/) 进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+登录[微信公众平台](https://mp.weixin.qq.com/)进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
 
 2. 引入 JS-SDK
 
@@ -132,7 +137,7 @@ wx.config({
 
 > 注1: 这一步中, 开发者服务器使用的是普通 access_token, 请注意[区别用户授权 access_token](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html).
 > 
-> 注2: 同时, timestamp 最大为10位, 这一点虽微信官方文档未明确提及, 但可以在 [微信 JS 接口签名校验工具](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign) 中, timestamp 一栏中输入从而验证.
+> 注2: 同时, timestamp 最大为10位, 这一点虽微信官方文档未明确提及, 但可以在[微信 JS 接口签名校验工具](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign)中, timestamp 一栏中输入从而验证.
 
 4. 通过ready接口处理成功验证
 
@@ -156,7 +161,106 @@ wx.error(function (res) {
 
 ### 微信开发者工具, 无法调试开放标签
 
-是的, 重要的事情说三遍, 不要惊讶, 不要惊讶, 不要惊讶, 欲对开放标签进行本地调试, 只能通过真机进行, 为此你需要完成一系列的前置操作, 例如安全域名绑定, 修改 host, nginx 反向代理 etc. 😁
+是的, 重要的事情说三遍, 不要惊讶, 不要惊讶, 不要惊讶, 欲对开放标签进行本地调试, 只能通过真机进行, 为此你可能需要完成一系列的前置操作, 例如安全域名绑定, 修改 host, nginx 反向代理, etc. 😁
+
+或者, 也可以使用[公众平台测试沙盒](http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)来进行调试 (u r welcome BTW).
+
+### Vue, React 等 MVVM 框架 `<template></template>` 内容不显示
+
+在此类视图模板中请使用 `<script type="text/wxtag-template"><script>`, 避免与 MVVM 框架的 `<template>` 标签冲突.
+
+```html
+// Vue.js
+<templte>
+  <wx-open-launch-app
+    id="launch-btn"
+    appid="your-appid"
+    extinfo="your-extinfo"
+  >
+    <script type="text/wxtag-template">
+      <style>.btn { padding: 12px }</style>
+      <button class="btn">打开App</button>
+    <script>
+  </wx-open-launch-app>
+</template>
+```
+
+### 页面样式无法作用在模板中的 HTML 元素上
+
+微信开放标签使用了类似 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 的技术对开放标签内容进行组装和渲染 (说是类似, 是因为无法窥探其内部实现), 其插槽中模版的样式是和页面隔离的，因此需要注意在插槽中定义模版的样式. 也就意味着, 开发者需要维护两套样式 (微信H5中的开放标签和常规H5中的非开放标签), 尽管两套样式的代码应当保持一致.
+
+> 注1: 页面中与布局和定位相关的样式，如 `position: fixed; top -100;` 等，尽量不要写在插槽模版的节点中，请声明在标签或其父节点上.
+> 
+> 注2: 对于有 [CSP](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP) 要求的页面，需要添加白名单 `frame-src https://*.qq.com webcompt:`，才能在页面中正常使用开放标签.
+
+### 代码正确, 但开放标签内容不显示
+
+若是SPA应用, 需在路由卫士中进行接口config配置注入, 代码如下:
+
+```js
+// 伪代码
+router.afterEach(async (to) => {
+  wx.config({
+    debug: false,
+    appId: '',
+    timestamp: ,
+    nonceStr: '',
+    signature: '',
+    jsApiList: [],
+    openTagList: ['wx-open-launch-app']
+  });
+})
+```
+
+若仅需注入开放标签, 则同时需保证 `jsApiList` 不为空, 否则开放标签也无法渲染, 上面的代码需变为:
+
+```js
+// 伪代码
+router.afterEach(async (to) => {
+  wx.config({
+    debug: false,
+    appId: '',
+    timestamp: ,
+    nonceStr: '',
+    signature: '',
+    jsApiList: ['Mother Fucker'],
+    openTagList: ['wx-open-launch-app']
+  });
+})
+```
+
+### `checkJsApi` 无法检测当前客户端版本是否支持开放标签
+
+`checkJsApi` 仅能检测当前客户端版本是否支持 `jsApiList[]` 中的接口, 无法检测 `openTagList[]` 中的接口. 检测当前客户端版本是否支持开放标签的代码请参考[兼容性](#兼容性)一节.
+
+> 注：checkJsApi接口是客户端6.0.2新引入的一个预留接口，第一期开放的接口均可不使用checkJsApi来检测。jssdk都是兼容低版本的，不需要第三方自己额外做更多工作，但有的接口是6.0.2新引入的，只有新版才可调用。
+
+### iOS 下抛错: JS-SDK 签名不合法
+
+通常情况下, 服务端通过获取 HTTP 报头中的 `Referer` 字段来设置签名所需的网址, 但是对于运行在 iOS 下的 SPA 应用, `Referer` 始终为其首页地址, 这就会导致下例问题:
+
+首页: A
+
+使用 JS-SDK 的目标页: B
+
+在 iOS 下, 直接访问 B 页面, 此时服务端获取 `Referer` 作为签名网址, 然后将签名信息返回给 B 页面, 同时 B 页面拿到签名信息, 调用 `wx.config` 进行接口注入. 由于当前 `window.location.href` 不等于签名时所使用的 `Referer` 地址, 则会导致客户端抛出 `invalid signature` 异常, 从而无法使用 JS-SDK.
+
+所以为了兼容 iOS, 则需要手动设置所需签名的网址为 `window.location.href`:
+
+```js
+// 伪代码
+import axios from 'axios'
+
+const getWxConfig = () => {
+  return axios({
+    method: 'GET',
+    url: '/get/wxSDKConfig',
+    data: {
+      url: window.location.href
+    }
+  })
+}
+```
 
 ## 参考资料
 
