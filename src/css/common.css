@@ -17,6 +17,7 @@ body {
 }
 
 .scroll-2-top {
+  z-index: 100;
   position: fixed;
   right: 1em;
   bottom: 1em;
