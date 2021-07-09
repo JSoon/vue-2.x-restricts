@@ -7,6 +7,7 @@
 | 孙靖     | 2020/06/22 | 1.0.0 |        |
 | 孙靖     | 2020/07/29 | 1.0.1 | 优化brace-style |
 | 孙靖     | 2021/01/20 | 1.0.2 | 优化comma-spacing |
+| 孙靖     | 2021/07/09 | 1.1.0 | 精简配置 |
 
 ## 配置文件
 
@@ -18,8 +19,6 @@
 const {
   NODE_ENV,
 } = process.env;
-const NODE_ENV_DEV = 'development';
-const NODE_ENV_STAGE = 'staging';
 const NODE_ENV_PROD = 'production';
 
 module.exports = {
@@ -29,67 +28,43 @@ module.exports = {
     node: true,
     es6: true,
   },
-  globals: {
-    chai: 'readonly',
-    mocha: 'readonly',
-    describe: 'readonly',
-    it: 'readonly',
-  },
-  plugins: [
-    'html',
-  ],
   extends: [
     'airbnb-base',
+    'prettier',
   ],
-  parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 6,
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true
-    },
-    sourceType: 'module',
+    parser: 'babel-eslint',
   },
   rules: {
-    // #region ESlint规则
+    // #region ESLint规则
 
     // https://eslint.org/docs/rules/
     // https://eslint.org/docs/user-guide/configuring#extending-configuration-files
-    'no-console': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
-    'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
-    'max-len': ['error', 200],
+    'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
     'comma-dangle': ['error', 'always-multiline'],
     'comma-spacing': ['error', { before: false, after: true }],
     'consistent-return': 'off',
+    'func-names': 'off',
     'import/extensions': 'off',
     'import/no-cycle': 'off',
-    'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
-    'func-names': 'off',
     'linebreak-style': 'off',
-    'no-unused-vars': 'warn',
-    'no-useless-return': 'warn',
-    'no-use-before-define': ['error', 'nofunc'],
-    'no-unused-expressions': 'off',
+    'max-len': ['error', 200],
+    'no-console': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
+    'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
+    'no-irregular-whitespace': 'off',
     'no-param-reassign': 'warn',
     'no-shadow': 'warn',
-    'brace-style': ['error', 'stroustrup', {
-      allowSingleLine: true,
-    }],
-    'no-irregular-whitespace': 'off',
     'no-underscore-dangle': 'off',
+    'no-unused-expressions': 'off',
+    'no-unused-vars': 'warn',
+    'no-use-before-define': ['error', 'nofunc'],
+    'no-useless-return': 'warn',
+    'prefer-destructuring': 'off',
 
     // #endregion
   },
-  overrides: [{
-    files: [
-      '**/tests/*.{j,t}s?(x)',
-      '**/__tests__/*.{j,t}s?(x)',
-      '**/tests/unit/**/*.spec.{j,t}s?(x)',
-    ],
-    env: {
-      mocha: true,
-    },
-  }],
 };
 ```
