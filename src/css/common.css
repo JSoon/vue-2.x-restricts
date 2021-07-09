@@ -16,11 +16,30 @@ body {
     sans-serif;
 }
 
+/* 回到顶部 */
 .scroll-2-top {
   z-index: 100;
   position: fixed;
-  right: 1em;
-  bottom: 1em;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: rgba(238, 238, 238, .9);
+  color: #999;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 回到首页 */
+.back-2-home {
+  z-index: 100;
+  position: fixed;
+  right: 14px;
+  bottom: calc(14px * 2 + 60px);
   display: flex;
   justify-content: center;
   align-items: center;
