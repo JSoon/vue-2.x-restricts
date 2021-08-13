@@ -8,6 +8,7 @@
 | 孙靖     | 2020/07/29 | 1.0.1 | 优化brace-style |
 | 孙靖     | 2021/01/20 | 1.0.2 | 优化comma-spacing |
 | 孙靖     | 2021/07/09 | 1.1.0 | 精简配置 |
+| 孙靖     | 2021/08/13 | 1.2.0 | 新增prettier配置, 优化eslint规则(删减同prettier冲突的配置项) |
 
 ## 配置文件
 
@@ -16,11 +17,6 @@
 **.eslintrc.js**
 
 ```js
-const {
-  NODE_ENV,
-} = process.env;
-const NODE_ENV_PROD = 'production';
-
 module.exports = {
   root: true,
   env: {
@@ -43,31 +39,27 @@ module.exports = {
 
     // https://eslint.org/docs/rules/
     // https://eslint.org/docs/user-guide/configuring#extending-configuration-files
-    'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
-    'comma-dangle': ['error', 'always-multiline'],
-    'comma-spacing': ['error', { before: false, after: true }],
-    'consistent-return': 'off',
-    'func-names': 'off',
-    'import/extensions': 'off',
-    'import/no-cycle': 'off',
-    'import/no-extraneous-dependencies': 'off',
-    'import/no-unresolved': 'off',
+    'curly': ['error', 'all'],
+    'import/extensions': 'off', // 忽略文件扩展名检测, 例如{.vue,.js}等
+    'import/no-unresolved': 'off', // 忽略@等别名检测, 使用jsconfig.js配置进行路径解析跳转
     'import/prefer-default-export': 'off',
-    'linebreak-style': 'off',
-    'max-len': ['error', 200],
-    'no-console': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
-    'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
-    'no-irregular-whitespace': 'off',
-    'no-param-reassign': 'warn',
-    'no-shadow': 'warn',
-    'no-underscore-dangle': 'off',
-    'no-unused-expressions': 'off',
-    'no-unused-vars': 'warn',
-    'no-use-before-define': ['error', 'nofunc'],
-    'no-useless-return': 'warn',
-    'prefer-destructuring': 'off',
+    'no-console': 'off',
+    'no-param-reassign': 'off',
 
     // #endregion
+
+    //#region Vue.js ESlint规则
+
+    // https://eslint.vuejs.org/rules/#uncategorized
+    'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: true, ignores: [] }],
+    'vue/eqeqeq': ['error', 'always'],
+    'vue/padding-line-between-blocks': ['error', 'always'],
+
+    //#endregion
   },
 };
 ```
+
+**.prettierrc.js**
+
+Prettier配置见: [.prettierrc.js](../restriction-prettier/index.html)

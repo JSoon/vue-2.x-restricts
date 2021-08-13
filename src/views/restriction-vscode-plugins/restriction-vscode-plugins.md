@@ -2,10 +2,11 @@
 
 <h2>文档变更日志</h2>
 
-| 编写人员 | 修改时间   | 版本  |
-| -------- | ---------- | ----- |
-| 孙靖     | 2020/05/28 | 1.0.0 |
-| 孙靖     | 2021/07/09 | 1.1.0 |
+| 编写人员 | 修改时间   | 版本  |  更新日志
+| -------- | ---------- | ----- | ------ |
+| 孙靖     | 2020/05/28 | 1.0.0 |  |
+| 孙靖     | 2021/07/09 | 1.1.0 |  |
+| 孙靖     | 2021/08/13 | 1.2.0 | 优化prettier配置 |
 
 <h2>目录</h2>
 
@@ -16,6 +17,8 @@
 ## 规范说明
 
 除编码层面的规范外, 编辑器规范也是一种重要的提升个人开发效率, 增强团队协作能力的有效途径.
+
+> 简言之: 约定大于配置, 配置大于编码.
 
 ## 必要插件
 
@@ -60,30 +63,30 @@ ES201x, React JSX, Flow and GraphQL语法高亮.
   "extensions": [".html", ".js", ".jsx", ".vue"]
 },
 "eslint.validate": [
+  "html",
   "javascript",
   "javascriptreact",
   "typescript",
   "typescriptreact",
-  "html",
   "vue"
 ],
 // https://github.com/microsoft/vscode-eslint/issues/600#issuecomment-469211948
 "editor.codeActionsOnSave": {
   "source.fixAll.eslint": true
 },
-"files.autoSave": "off", // no fix on save with auto save on :-)
-"eslint.trace.server": "messages",
+"eslint.alwaysShowStatus": true,
 "eslint.format.enable": true,
-"eslint.alwaysShowStatus": true
+"eslint.trace.server": "messages",
+"files.autoSave": "off", // no fix on save with auto save on :-)
 
 // #endregion
 
 // #region Prettier
 
-// NOTE: Prettier插件的自动格式化不建议在VSCode中打开, 因为默认的配置会影响其他Linters
-// 基于该考虑, 故所有Prettier和Linter的任务均在husky中顺序进行
-// "editor.defaultFormatter": "esbenp.prettier-vscode",
-// "editor.formatOnSave": true
+"editor.defaultFormatter": "esbenp.prettier-vscode",
+"editor.formatOnSave": true,
+// 仅对存在配置文件的项目进行格式化, 避免对其他项目进行预期之外的格式化
+"prettier.requireConfig": true
 
 // #endregion
 ```
