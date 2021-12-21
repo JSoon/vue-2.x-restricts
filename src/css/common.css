@@ -16,35 +16,21 @@ body {
     sans-serif;
 }
 
-/* 回到顶部 */
-.scroll-2-top {
+/* 右下角工具条 */
+#J_Toolbar {
   z-index: 100;
   position: fixed;
   right: 14px;
   bottom: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  background-color: rgba(238, 238, 238, .9);
-  color: #999;
-  font-weight: bold;
-  cursor: pointer;
 }
 
-/* 回到首页 */
-.back-2-home {
-  z-index: 100;
-  position: fixed;
-  right: 14px;
-  bottom: calc(14px * 2 + 60px);
+#J_Toolbar .tool-item  {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 60px;
   height: 60px;
+  margin-top: 15px;
   border-radius: 12px;
   background-color: rgba(238, 238, 238, .9);
   color: #999;

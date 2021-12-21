@@ -11,13 +11,16 @@
 - [从源码构建 node-canvas](#从源码构建-node-canvas)
 - [Mac OS 安装 node-canvas 构建环境](#mac-os-安装-node-canvas-构建环境)
 - [Windows 安装 node-canvas 构建环境](#windows-安装-node-canvas-构建环境)
-  - [安装 node-gyp](#安装-node-gyp)
   - [安装 GTK 2](#安装-gtk-2)
   - [安装 libjpeg-turbo](#安装-libjpeg-turbo)
+  - [安装 node-gyp](#安装-node-gyp)
 - [Windows 下打包时可能遇到的问题及注意项](#windows-下打包时可能遇到的问题及注意项)
   - [electron-builder 构建原生依赖时报资源 404](#electron-builder-构建原生依赖时报资源-404)
   - [errorOut=Fatal error: Unable to commit changes](#erroroutfatal-error-unable-to-commit-changes)
-  - [exited with code ERR_ELECTRON_BUILDER_CANNOT_EXECUTE](#exited-with-code-err_electron_builder_cannot_execute)
+  - [exited with code ERR_ELECTRON_BUILDER_CANNOT_EXECUTE (Case 1)](#exited-with-code-err_electron_builder_cannot_execute-case-1)
+  - [exited with code ERR_ELECTRON_BUILDER_CANNOT_EXECUTE (Case 2)](#exited-with-code-err_electron_builder_cannot_execute-case-2)
+  - ['toupper': is not a member of 'std'](#toupper-is-not-a-member-of-std)
+  - [Canvas.obj : error LNK2001: unresolved external symbol "__declspec\(dllimport\) public: class std::shared_ptr\<class v8::BackingStore\> __cdecl v8::ArrayBuffer::GetBackingStore\(void\)](#canvasobj--error-lnk2001-unresolved-external-symbol-__declspecdllimport-public-class-stdshared_ptrclass-v8backingstore-__cdecl-v8arraybuffergetbackingstorevoid)
   - [其他问题](#其他问题)
 - [总结](#总结)
 - [参考资料](#参考资料)
@@ -30,11 +33,11 @@
 
 ## Node.js 版本
 
-本文中代码运行的 Node.js 版本如下:
+本文中代码运行的 Node.js 版本 (非 Electron) 如下:
 
 ```
-# Node    14.16.0
-# NPM     6.14.11
+# Node    14.18.0
+# NPM     6.14.15
 ```
 
 ## 配置镜像
@@ -124,9 +127,26 @@ brew install pkg-config cairo pango libpng jpeg giflib librsvg
 
 答:
 
-1. 全局安装 node-gyp
-2. 安装 GTK 2 (不是 GTK 3, 后者缺少必须的 libpng 支持)
-3. 安装 libjpeg-turbo (可选, 支持 JPEG, node-canvas 2.0+)
+1. 安装 GTK 2 (不是 GTK 3, 后者缺少必须的 libpng 支持)
+2. 安装 libjpeg-turbo (可选, 支持 JPEG, node-canvas 2.0+)
+3. 全局安装 node-gyp
+
+### 安装 GTK 2
+
+Cario 库打包在 GTK 中, 所以我们需要下载 GTK 2, 建议将下载的文件, 解压到固定目录 `C:\GTK` 下, 避免 node-gyp 构建时的路径问题.
+
+[GTK 2 - 32位](http://ftp.gnome.org/pub/GNOME/binaries/win32/gtk+/2.24/gtk+-bundle_2.24.10-20120208_win32.zip)
+
+[GTK 2 - 64位](http://ftp.gnome.org/pub/GNOME/binaries/win64/gtk+/2.22/gtk+-bundle_2.22.1-20101229_win64.zip)
+
+### 安装 libjpeg-turbo
+
+libjpeg-turbo 可在[官网](http://sourceforge.net/projects/libjpeg-turbo/files/)下载对应最新版本的安装文件(32位/64位), 目前的版本为 2.1.2, 安装时也建议安装在默认目录下:
+
+```
+32位: C:\libjpeg-turbo
+64位: C:\libjpeg-turbo64
+```
 
 ### 安装 node-gyp
 
@@ -165,29 +185,23 @@ npm config set python /path/to/executable/python38.exe
 在终端进入 `node_modules/canvas`, 执行以下代码:
 
 ```bash
+# 生成配置文件
 node-gyp configure
+# 执行构建
+node-gyp build
 ```
 
 在执行完毕后, 在 `node_modules/canvas/build/Release` 中可以看见, 相关的图形图像处理类库, 已经被编译成了 Windows 平台下的项目文件:
 
 ![node-canvas](./electron-builder-node-canvas.png)
 
-### 安装 GTK 2
+至此, 我们已经具备了 node-canvas 原生模块的构建环境, 接下来 (以 electron-builder 为例) 就可以进行 Electron 下 Node 原生模块的构建任务了, 进入项目根目录, 执行 npm 脚本:
 
-Cario 库打包在 GTK 中, 所以我们需要下载 GTK 2, 建议将下载的文件, 解压到固定目录 `C:\GTK` 下, 避免 node-gyp 构建时的路径问题.
-
-[GTK 2 - 32位](http://ftp.gnome.org/pub/GNOME/binaries/win32/gtk+/2.24/gtk+-bundle_2.24.10-20120208_win32.zip)
-
-[GTK 2 - 64位](http://ftp.gnome.org/pub/GNOME/binaries/win64/gtk+/2.22/gtk+-bundle_2.22.1-20101229_win64.zip)
-
-### 安装 libjpeg-turbo
-
-libjpeg-turbo 可在[官网](http://sourceforge.net/projects/libjpeg-turbo/files/)下载对应最新版本的安装文件(32位/64位), 目前的版本为 2.1.2, 安装时也建议安装在默认目录下:
-
+```bash
+npx electron-builder install-app-deps
 ```
-32位: C:\libjpeg-turbo
-64位: C:\libjpeg-turbo64
-```
+
+成功执行后, 即得到了 Electron 对应版本的 node-canvas 模块.
 
 ## Windows 下打包时可能遇到的问题及注意项
 
@@ -214,25 +228,94 @@ node-pre-gyp WARN Pre-built binaries not found for canvas@2.6.0 and electron@3.0
 }
 ```
 
-> 注: 此时需要保证手动构建时的 Node.js 版本同 Electron 的运行环境保持一致, 这点可以通过 nvm 等 node 版本管理器来实现.
+> 注: 配置后, 每次构建前, 建议执行一次 `npx electron-builder install-app-deps` 命令.
 
 ### errorOut=Fatal error: Unable to commit changes
 
 该问题主要可能由 360电脑管家 / 腾讯电脑管家 / 杀毒软件 引起, 退出这些应用, 重新运行打包即可.
 
-### exited with code ERR_ELECTRON_BUILDER_CANNOT_EXECUTE
+### exited with code ERR_ELECTRON_BUILDER_CANNOT_EXECUTE (Case 1)
 
 在进行32位打包时, 可能会出现该错误, 将 electron-builder 版本固定为 21.2.0 即可. 
 
 > 注, 该问题貌似只会出现在 Mac OS 上. 参考 https://github.com/electron-userland/electron-builder/issues/4629.
 
+### exited with code ERR_ELECTRON_BUILDER_CANNOT_EXECUTE (Case 2)
+
+```bash
+C:\Users\xxx\AppData\Local\electron-builder\Cache\nsis\nsis-3.0.4.2\Bin\makensis.exe exited with code ERR_ELECTRON_BUILDER_CANNOT_EXECUTE
+Output:
+Command line defined: "APP_ID=electron.app.hailuo"
+Command line defined: "APP_GUID=a2a73f01-f203-5dc4-88d4-25f1d49916a6"
+Command line defined: "UNINSTALL_APP_KEY=a2a73f01-f203-5dc4-88d4-25f1d49916a6"
+Command line defined: "PRODUCT_NAME=????"
+Command line defined: "PRODUCT_FILENAME=????"
+Command line defined: "APP_FILENAME=hailuo"
+Command line defined: "APP_DESCRIPTION=???????"
+Command line defined: "VERSION=1.2.500"
+Command line defined: "PROJECT_DIR=D:\SJJHWorkerSpace\hailuo-electron-windows"
+...
+Command line defined: "UNINSTALLER_OUT_FILE=D:\SJJHWorkerSpace\hailuo-electron-windows\dist\__uninstaller-nsis-hailuo.exe"
+Processing config: C:\Users\xxx\AppData\Local\electron-builder\Cache\nsis\nsis-3.0.4.2\nsisconf.nsh
+Processing script file: "<stdin>" (UTF8)
+
+Error output:
+File: failed opening file "D:\SJJHWorkerSpace\hailuo-electron-windows\dist\__uninstaller-nsis-hailuo.exe"
+```
+
+注意最后一排错误，`Failed opening file`。该问题可能由于 Windows 病毒和威胁防护系统误删了构建过程中的文件导致。可尝试关闭病毒和威胁防护开关来解决。
+
+### ['toupper': is not a member of 'std'](https://github.com/Automattic/node-canvas/issues/1848)
+
+解决方案如下, 修改 `node_modules/canvas/src/util.h` 代码:
+
+```h
+// Line 31
+return c1 == c2 || std::toupper(c1) == std::toupper(c2);
+```
+
+修改为:
+
+```h
+// std:: -> ::
+return c1 == c2 || ::toupper(c1) == ::toupper(c2);
+```
+
+### [Canvas.obj : error LNK2001: unresolved external symbol "__declspec\(dllimport\) public: class std::shared_ptr\<class v8::BackingStore\> __cdecl v8::ArrayBuffer::GetBackingStore\(void\)](https://github.com/nodejs/nan/issues/892)
+
+解决方案如下, 修改 `node_modules/nan/nan_typedarray_contents.h` 代码:
+
+```h
+// Line 36 - 40
+#if (V8_MAJOR_VERSION >= 8)
+  data = static_cast<char*>(buffer->GetBackingStore()->Data()) + byte_offset;
+#else
+  data = static_cast<char*>(buffer->GetContents().Data()) + byte_offset;
+#endif
+```
+
+修改为:
+
+```h
+// 去掉判断
+data = static_cast<char*>(buffer->GetContents().Data()) + byte_offset;
+```
+
+> 注1: 该方案仅对 electron@^13 以下版本生效, 因为 13 版本后, 内置的 v8 引擎 [已废弃 `GetContents` 接口](https://docs.google.com/document/d/1g8JFi8T_oAE_7uAri7Njtig7fKaPDfotU6huOa1alds/edit#heading=h.m0ba1sgg6hbq), 仅支持 `GetBackingStore`.
+> 
+> 注2: 在 13 版本后, 不知为何 node-canvas 在构建时会出现上述 `error LNK2001` 问题. 该问题已提交至 electron-builder [支持草案](https://github.com/electron/electron-rebuild/pull/703).
+
 ### 其他问题
 
-其他可能出现的问题可参考官方 Issue: [⭐ How to Troubleshoot Installation](https://github.com/Automattic/node-canvas/issues/1511)
+- [Electron-rebuild canvas 2.6.1 fails on Windows 10: Canvas.obj : error LNK2001: unresolved external symbol](https://github.com/Automattic/node-canvas/issues/1589)
+
+- [[Bug]: Link error for native c++ modules](https://github.com/electron/electron/issues/29893)
+
+- 官方 Issues 参考: [⭐ How to Troubleshoot Installation](https://github.com/Automattic/node-canvas/issues/1511).
 
 ## 总结
 
-Electron.js 开发在国内社区并不像 React.js 和 Vue.js 那样活跃, 但这并不意味着它没有发展空间. 在接手 IM 客户端项目的这短短半年, 其版本已经从 v13 迭代到了 v16, 可见其发展的速度之迅速, 其中也不乏大名鼎鼎的产品, 诸如 Microsoft 的 VSCode, Facebook 的 Messenger 等等. 
+Electron.js 开发在国内社区并不像 React.js 和 Vue.js 那样活跃, 但这并不意味着它没有发展空间. 在接手 IM 客户端项目的这短短半年, 其版本已经从 v12 迭代到了 v16, 可见其发展的速度之迅速, 其中也不乏大名鼎鼎的产品, 诸如 Microsoft 的 VSCode, Facebook 的 Messenger 等等. 
 
 大前端能够做到的事情越来越多, 也降低了各平台软件的开发成本. 但坦白的说, 作为技术行业的参与者, 就必须有不断学习的觉悟和恒心.
 

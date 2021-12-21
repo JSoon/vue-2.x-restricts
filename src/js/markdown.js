@@ -12,14 +12,12 @@ if (window.marked) {
 // 回到顶部 & 回到首页
 (function () {
   // 回到顶部
-  var ele = document.createElement('div');
-  ele.id = 'J_Scroll2Top';
-  ele.className = 'scroll-2-top';
-  ele.innerHTML = '↑';
-  ele.title = '回到顶部';
-  document.body.appendChild(ele);
+  var eleScroll2Top = document.createElement('div');
+  eleScroll2Top.className = 'tool-item scroll-2-top';
+  eleScroll2Top.innerHTML = '↑';
+  eleScroll2Top.title = '回到顶部';
 
-  ele.addEventListener('click', function () {
+  eleScroll2Top.addEventListener('click', function () {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -27,14 +25,24 @@ if (window.marked) {
   }, false);
 
   // 回到首页
-  var ele = document.createElement('div');
-  ele.id = 'J_Back2Home';
-  ele.className = 'back-2-home';
-  ele.innerHTML = '首页';
-  ele.title = '回到首页';
-  document.body.appendChild(ele);
+  var eleBack2Home = document.createElement('div');
+  eleBack2Home.className = 'tool-item back-2-home';
+  eleBack2Home.innerHTML = '首页';
+  eleBack2Home.title = '回到首页';
 
-  ele.addEventListener('click', function () {
+  eleBack2Home.addEventListener('click', function () {
     window.location.href = '/front-end'
   }, false);
+
+  // 联系邮箱
+  var eleEmailAt = document.createElement('a');
+  eleEmailAt.className = 'tool-item email-at';
+  eleEmailAt.innerHTML = '邮箱';
+  eleEmailAt.title = '联系邮箱';
+  eleEmailAt.href = 'mailto:serdeemail@gmail.com';
+
+  var toolbar = document.getElementById('J_Toolbar');
+  toolbar.appendChild(eleBack2Home);
+  toolbar.appendChild(eleEmailAt);
+  toolbar.appendChild(eleScroll2Top);
 })();
