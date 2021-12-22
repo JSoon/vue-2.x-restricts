@@ -11,6 +11,7 @@
 - [截屏保存](#截屏保存)
 - [拾色器](#拾色器)
 - [马赛克工具](#马赛克工具)
+- [撤销工具](#撤销工具)
 - [Dëmo](#dëmo)
 - [总结](#总结)
 - [参考资料](#参考资料)
@@ -224,7 +225,19 @@ const [r, g, b, a] = imageData.data
 
 ## 马赛克工具
 
-TODO: 使用马赛克/毛玻璃算法在截屏上绘制路径, 实现马赛克效果.
+马赛克效果实现原理如下图:
+
+![pixelate](mosaic.png)
+
+在编辑画布上, 首先绘制马赛克截屏图片 (由 [Fixelate 滤镜](http://fabricjs.com/docs/fabric.Image.filters.Pixelate.html)实现) 作为背景图; 接着再绘制相同截屏的图片对象, 放置在背景图上层. 最后, 通过 [Eraser Brush](http://fabricjs.com/erasing) 对普通截屏对象进行擦除, 即实现了马赛克工具功能.
+
+## 撤销工具
+
+撤销工具主要由 [Serialization](http://fabricjs.com/fabric-intro-part-3#serialization) 接口实现. 通过对每一步绘制操作进行写缓存 `JSON.stringify(canvas.toObject([propertiesToInclude]))` / 取缓存 `canvas.loadFromJSON(json, callback, reviver)`, 从而实现撤销功能.
+
+> 注1: 在写缓存时, `JSON.stringify` 仅会对部分基础属性进行序列化, 若需要对特定属性进行序列化, 还需要在 `canvas.toObject` 调用时传入 `[propertiesToInclude]`.
+>
+> 注2: 在取缓存时, `canvas.loadFromJSON` 仅会恢复对象, 若该对象在序列化前存在绑定事件, 则在恢复对象时, 在回调函数 `reviver` 中重新进行事件绑定, 否则这些事件会丢失.
 
 ## Dëmo
 
