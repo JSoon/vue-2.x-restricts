@@ -235,9 +235,48 @@ const [r, g, b, a] = imageData.data
 
 撤销工具主要由 [Serialization](http://fabricjs.com/fabric-intro-part-3#serialization) 接口实现. 通过对每一步绘制操作进行写缓存 `JSON.stringify(canvas.toObject([propertiesToInclude]))` / 取缓存 `canvas.loadFromJSON(json, callback, reviver)`, 从而实现撤销功能.
 
-> 注1: 在写缓存时, `JSON.stringify` 仅会对部分基础属性进行序列化, 若需要对特定属性进行序列化, 还需要在 `canvas.toObject` 调用时传入 `[propertiesToInclude]`.
->
-> 注2: 在取缓存时, `canvas.loadFromJSON` 仅会恢复对象, 若该对象在序列化前存在绑定事件, 则在恢复对象时, 在回调函数 `reviver` 中重新进行事件绑定, 否则这些事件会丢失.
+写缓存时, `JSON.stringify` 仅会对部分基础属性进行序列化, 若需要对特定属性进行序列化, 还需要在 `canvas.toObject` 调用时传入 `[propertiesToInclude]`. 同时, 若对象上存在自定义属性, 还需要对 `toObject` 进行扩展, 以便自定义属性能够被序列化. 示例代码如下:
+
+```js
+// 扩展 fabric 对象属性, 使其能够被序列化, 否则 obj.toObject() 中不会存在自定义属性
+const extendFaricObjectProperty = (obj, properties = []) => {
+  obj.toObject = (function(toObject) {
+    return function(propertiesToInclude) {
+      return fabric.util.object.extend(toObject.apply(this, [propertiesToInclude]), {
+        ...properties.reduce((acc, property) => ({ ...acc, [property]: this[property]}), {}), 
+      });
+    };
+  })(obj.toObject);
+};
+```
+
+取缓存时, `canvas.loadFromJSON` 仅会恢复对象, 若该对象在序列化前存在绑定事件, 则在恢复对象时, 在回调函数 `reviver` 中重新进行事件绑定, 否则这些事件会丢失. 示例代码如下:
+
+```js
+canvas.loadFromJSON(
+  // JSON string or object
+  json,
+  // callback function
+  () => {
+    // 恢复成功回调
+    // ...
+  },
+  /**
+   * reviver function
+   * 
+   * NOTE: 从 JSON 恢复的对象, 需要重新为其绑定事件
+   * @see {@link https://stackoverflow.com/questions/49697408/fabricjs-preserve-events-on-saving-getting-canvas-from-json}
+   * 
+   * @param {object} json   json 配置
+   * @param {object} object 形状实例对象
+   */
+  (json, object) => {
+    // 重新绑定事件
+    object.addEventListener(...)
+    // ...
+  },
+);
+```
 
 ## Dëmo
 
