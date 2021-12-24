@@ -290,7 +290,7 @@ canvas.loadFromJSON(
 
 总的来说, 通过 [desktopCapturer](https://www.electronjs.org/docs/latest/api/desktop-capturer) 和 [Facric.js](http://fabricjs.com/), 降低了前端开发截屏和编辑功能的难度, 使得开发者可以更专注于交互性开发. 
 
-但是, 由于国内互联网的限制, 以及[原生 Node 模块](https://www.electronjs.org/docs/latest/tutorial/using-native-node-modules)区别于 Electron 运行环境, 在将截屏功能集成到 Electron 应用时, 不可避免又会遇到 [node-canvas](https://github.com/Automattic/node-canvas) 的编译问题. 关于打包 node-canvas, 可参考[《如何在 mac OS 和 Windows 下编译 Electron 应用的 node-canvas》](../blog-electron-node-canvas/index.html).
+但是, 由于国内互联网的限制, 以及[原生 Node 模块](https://www.electronjs.org/docs/latest/tutorial/using-native-node-modules)区别于 Electron 运行环境, 在将截屏功能集成到 Electron 应用时, ⚠️**若在主进程中 (即 Node 环境下) 使用到了 canvas**⚠️, 则不可避免又会遇到 [node-canvas](https://github.com/Automattic/node-canvas) 的编译问题. 关于打包 node-canvas, 可参考[《如何在 mac OS 和 Windows 下编译 Electron 应用的 node-canvas》](../blog-electron-node-canvas/index.html).
 
 ## 参考资料
 
