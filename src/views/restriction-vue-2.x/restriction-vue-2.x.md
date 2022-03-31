@@ -1,4 +1,4 @@
-<h1>Vue 2.x编码规范</h1>
+<h1>Vue 2.x 编码风格指南</h1>
 
 <h2>文档变更日志</h2>
 
@@ -6,19 +6,20 @@
 | -------- | ---------- | ----- | ------ |
 | 孙靖     | 2020/05/20 | 1.0.0 |         |
 | 孙靖     | 2021/07/09 | 1.0.1 | 更新标题 |
+| 孙靖     | 2022/03/31 | 1.0.2 | 优化部分描述 |
 
 <h2>目录</h2>
 
 - [优先级级别说明](#优先级级别说明)
-- [优先级: 最高](#优先级-最高)
+- [优先级 A: 极其重要 (Essential)](#优先级-a-极其重要-essential)
   - [组件名称](#组件名称)
-  - [prop属性](#prop属性)
-  - [v-for遍历语法](#v-for遍历语法)
-  - [v-if和v-for](#v-if和v-for)
+  - [prop 属性](#prop-属性)
+  - [v-for 遍历语法](#v-for-遍历语法)
+  - [v-if 和 v-for](#v-if-和-v-for)
   - [模板根元素](#模板根元素)
   - [组件样式域](#组件样式域)
   - [私有属性命名](#私有属性命名)
-- [优先级: 次高](#优先级-次高)
+- [优先级 B: 强烈推荐 (Strongly Recommended)](#优先级-b-强烈推荐-strongly-recommended)
   - [组件文件](#组件文件)
   - [单文件组件文件名](#单文件组件文件名)
   - [基础组件命名](#基础组件命名)
@@ -27,7 +28,7 @@
   - [组件名称的单词顺序](#组件名称的单词顺序)
   - [自闭合组件标签](#自闭合组件标签)
   - [模板中的组件命名](#模板中的组件命名)
-  - [JS/JSX中的组件命名](#jsjsx中的组件命名)
+  - [JS/JSX 中的组件命名](#jsjsx-中的组件命名)
   - [全词组件命名](#全词组件命名)
   - [属性命名](#属性命名)
   - [多属性元素](#多属性元素)
@@ -35,16 +36,18 @@
   - [仅使用简单的computed属性](#仅使用简单的computed属性)
   - [HTML属性值](#html属性值)
   - [指令缩写](#指令缩写)
+- [优先级 C & D](#优先级-c--d)
+- [参考资料](#参考资料)
 
 ## 优先级级别说明
 
 对于优先级的级别分类，并不意味着优先级低的规范就不需要强制执行，而是作为编程意识及习惯重要程度的自我认知。
 
-该规范旨在提升Vue.js项目的代码质量，增强团队开发协作，提升项目的可维护性（包括迭代性、移植性、向后兼容性等等）。
+该规范旨在提升Vue.js项目的代码质量，增强团队开发协作，提升项目的可维护性（包括代码可读性、移植性、向后兼容性等等）。
 
-> 以下规范是团队关于Vue.js框架基本约定的内容，请务必严格遵循。
+> 以下规范是团队关于Vue 2.x编程风格约定的基本内容，请务必严格遵循。
 
-##  优先级: 最高
+##  优先级 A: 极其重要 (Essential)
 
 ### 组件名称
 
@@ -62,7 +65,7 @@ export default {
 }
 ```
 
-### prop属性
+### prop 属性
 
 属性定义必须使用对象格式。且包含`type`，`required`和`validator`，其中，`validator`为可选项。
 
@@ -84,9 +87,9 @@ props: {
 }
 ```
 
-### v-for遍历语法
+### v-for 遍历语法
 
-`v-for`必须同`key`属性同时使用。
+`v-for`必须同`key`属性同时使用，以减少DOM操作，提升性能，保证对象持久性[Object Constancy](https://bost.ocks.org/mike/constancy/)。
 
 ```html
 <ul>
@@ -99,9 +102,9 @@ props: {
 </ul>
 ```
 
-### v-if和v-for
+### v-if 和 v-for
 
-`v-if`和`v-for`一定不能出现在同一个组件上。
+`v-if`和`v-for`一定不能出现在同一个组件上，若需使用请检查代码设计是否合理。
 
 ### 模板根元素
 
@@ -111,7 +114,7 @@ props: {
 
 ```html
 <template>
-	<div class="company-certification">
+  <div class="company-certification">
   	<button class="button button-close">X</button>
   </div>
 </template>
@@ -121,7 +124,7 @@ props: {
 
 对于单文件组件，必须添加样式域。同时，所有组件样式必须包裹在根元素样式下。
 
-此外，如果需要覆盖子组件样式，请使用[深度选择器](https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors)。
+此外，如果需要样式穿透(覆盖子组件样式)，请使用[深度选择器](https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors)。
 
 ```html
 <template>
@@ -161,10 +164,12 @@ props: {
 
 ### 私有属性命名
 
-所有[mixin](https://vuejs.org/v2/guide/mixins.html)，[plugin](https://vuejs.org/v2/guide/plugins.html)等等可复用的功能元件的自定义私有属性，都只能定义在元件内部，原则上对外都不能被访问。如果需要被访问，必须加上`$_yourMixinOrPluginName_`前缀。
+所有[mixin](https://vuejs.org/v2/guide/mixins.html)，[plugin](https://vuejs.org/v2/guide/plugins.html)等等可复用的功能元件的自定义私有属性，都只能定义在元件内部，原则上对外都不能被访问。如果需要被访问，必须加上`$_yourMixinOrPluginName_`名称域前缀，以减少与其他协同开发者代码, 以及Vue.js本身对象原型链上的私有属性之间可能产生的命名冲突。
+
+> 在 Vue.js 源码中, 使用 `_` 前缀来定义私有属性, `$` 前缀来定义暴露给用户的特殊实例属性.
 
 ```js
-// 定义为内部函数
+// mixin
 const myGreatMixin = {
   // ...
   methods: {
@@ -175,6 +180,7 @@ const myGreatMixin = {
   }
 }
 
+// 定义为内部函数
 function myPrivateFunction() {
   // ...
 }
@@ -183,10 +189,11 @@ function myPrivateFunction() {
 或者：
 
 ```js
-// 添加命名前缀
+// mixin
 const myGreatMixin = {
   // ...
   methods: {
+    // 添加命名前缀
     $_myGreatMixin_update: function () {
       // ...
     }
@@ -194,7 +201,7 @@ const myGreatMixin = {
 }
 ```
 
-## 优先级: 次高
+## 优先级 B: 强烈推荐 (Strongly Recommended)
 
 ### 组件文件
 
@@ -280,10 +287,10 @@ components/
 
 组件名称的单词顺序必须以上下文联系最紧密的名词开头，然后加上限定词。
 
-> 请务必不要使用自然语言的语法顺序。
+> 请务必不要使用自然语言的语法顺序，这样会影响文件在IDE中的排序。
 
 ```
-// 所有与搜索相关的组件，都以`Search`开头，与设置相关的组件，都以`Settings`开头
+// 所有与搜索相关的组件，都以`Search`开头；与设置相关的组件，都以`Settings`开头
 components/
 |- SearchButtonClear.vue
 |- SearchButtonRun.vue
@@ -295,9 +302,9 @@ components/
 
 ### 自闭合组件标签
 
-在单文件组件、字符串模板和JSX文件中，没有slot内容的组件，必须进行自闭合。
+在单文件组件、字符串模板和JSX文件中，没有slot内容的组件，应该进行自闭合。
 
-在DOM模板中的无内容组件，不要进行自闭合。
+在DOM模板中的无内容组件，不要进行自闭合(HTML规范中也只允许["void"元素](https://html.spec.whatwg.org/multipage/syntax.html#void-elements))。
 
 ```html
 <!-- 单文件组件，字符串模板，JSX文件 -->
@@ -318,13 +325,15 @@ components/
 <my-component></my-component>
 ```
 
-### JS/JSX中的组件命名
+延伸阅读: [为什么应当避免使用 DOM Templates？](https://vuejsdevelopers.com/2017/09/17/vue-js-avoid-dom-templates/)
+
+### JS/JSX 中的组件命名
 
 同模板中的组件命名。
 
 ### 全词组件命名
 
-组件的命名绝大多数情况下，必须使用全词命名，不使用缩写命名。
+组件的命名绝大多数情况下，必须使用全词命名，不使用缩写命名，以增强可读性。
 
 ```
 components/
@@ -351,7 +360,7 @@ props: {
 
 ### 多属性元素
 
-拥有多个属性的元素，其属性必须各自写在单独一排。
+拥有多个属性的元素，其属性应该各自写在单独一排。
 
 ```html
 <img
@@ -388,7 +397,7 @@ computed: {
 
 ### 仅使用简单的computed属性
 
-复杂的`computed`必须拆分成多个简单计算属性。
+复杂的`computed`应该拆分成多个简单计算属性。
 
 ```js
 computed: {
@@ -436,6 +445,16 @@ computed: {
   <p>Here's some contact info</p>
 </template>
 ```
+
+## 优先级 C & D
+
+优先级 A 和 B 中，已经囊括了绝大部分可能影响代码质量和维护性的规则，所以不再进一步对编码规范进行约束。同时，通过对项目进行 eslint 和 hook 配置，很大程度上能够保障这些编码规范得到执行，最大限度避免不合理代码的上传。
+
+## 参考资料
+
+[Vue Style Guide](https://v2.vuejs.org/v2/style-guide/) (英文文档)
+
+[Vue 代码风格指南](https://cn.vuejs.org/v2/style-guide/index.html) (中文文档)
 
 
 
