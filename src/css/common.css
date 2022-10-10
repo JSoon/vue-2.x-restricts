@@ -17,14 +17,14 @@ body {
 }
 
 /* 右下角工具条 */
-#J_Toolbar {
+.toolbar {
   z-index: 100;
   position: fixed;
   right: 14px;
   bottom: 14px;
 }
 
-#J_Toolbar .tool-item  {
+.toolbar .tool-item  {
   display: flex;
   justify-content: center;
   align-items: center;

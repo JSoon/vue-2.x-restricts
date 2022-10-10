@@ -40,9 +40,12 @@ if (window.marked) {
   eleEmailAt.innerHTML = '邮箱';
   eleEmailAt.title = '联系邮箱';
   eleEmailAt.href = 'mailto:serdeemail@gmail.com';
-
-  var toolbar = document.getElementById('J_Toolbar');
+  
+  // 右下角工具条
+  var toolbar = document.createElement('div')
+  toolbar.className = 'toolbar'
   toolbar.appendChild(eleBack2Home);
   toolbar.appendChild(eleEmailAt);
   toolbar.appendChild(eleScroll2Top);
+  document.body.appendChild(toolbar);
 })();
