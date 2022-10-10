@@ -15,6 +15,11 @@ The Internet is a global network of computers connected to each other which comm
 - [How browser works](https://developer.mozilla.org/en-US/docs/Web/Performance/How_browsers_work)
 - [浏览器工作原理](https://juejin.cn/post/7047462821352701966)
 
+## HTML
 
+The HyperText Markup Language or HTML is the standard markup language for documents designed to be displayed in a web browser. It can be assisted by technologies such as Cascading Style Sheets (CSS) and scripting languages such as JavaScript.
+
+- [HTML 教程](https://www.runoob.com/html/html-tutorial.html)
+- [使用惯例和最佳实践](https://github.com/hail2u/html-best-practices/blob/main/README.zh-CN.md)
 
 
