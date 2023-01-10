@@ -8,6 +8,7 @@
   - [Internet](#internet)
   - [HTML](#html)
   - [CSS](#css)
+  - [JavaScript](#javascript)
 
 ## 🔍 前端学习路径图
 
@@ -43,3 +44,9 @@ Cascading Style Sheets (CSS) is a style sheet language used for describing the p
 - [Flexbox Froggy - 弹性盒子呱呱呱, 你学"废"了吗?](https://flexboxfroggy.com/)
 - [Grid Garden - 一起来种胡萝卜](https://cssgridgarden.com/)
 - [媒体查询完整指南](https://css-tricks.com/a-complete-guide-to-css-media-queries/)
+
+## JavaScript
+
+JavaScript (`/ˈdʒɑːvəskrɪpt/`), often abbreviated as JS, is a [programming language](https://en.wikipedia.org/wiki/Programming_language) that is one of the core technologies of the [World Wide Web](https://en.wikipedia.org/wiki/World_Wide_Web), alongside HTML and CSS.
+
+- [现代 JavaScript 教程](https://zh.javascript.info/)（以最新的 JavaScript 标准为基准。通过简单但足够详细的内容，讲解从基础到高阶的 JavaScript 相关知识，并提供在线编辑预览功能。）
